@@ -98,7 +98,9 @@ if(PC_SHARED_LIB)
 
   if(NOT MSVC)
     target_compile_options(precore PRIVATE -fvisibility=hidden)
-  endif()  
+  else()
+    set_target_properties(precore PROPERTIES SUFFIX ${PROJECT_VERSION}.dll)
+  endif()
 
   target_include_directories(precore PUBLIC ${PRECORE_SOURCE_DIR})
   set_target_properties(precore PROPERTIES VERSION ${PROJECT_VERSION}
@@ -112,6 +114,8 @@ if(PC_SHARED_LIB)
         CACHE BOOL "")
     target_link_libraries(precore pugixml-shared)
   endif()
+
+  install(TARGETS precore DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif()
 
 add_subdirectory(3rd_party/pugixml)
